@@ -80,6 +80,19 @@ def draw_agent(agent, cell_width, cell_height):
     glVertex2f(pos_x, pos_y - cell_height)
     glEnd()
 
+def draw_children(maze, agent, cell_width, cell_height):
+    for child_x, child_y in agent.child_positions:
+        glColor3f(1.0, 0.0, 1.0)  # Pink color for children
+        pos_x = -1.0 + child_x * cell_width
+        pos_y = 1.0 - child_y * cell_height
+        
+        glBegin(GL_QUADS)
+        glVertex2f(pos_x + cell_width*0.2, pos_y - cell_height*0.2)
+        glVertex2f(pos_x + cell_width*0.8, pos_y - cell_height*0.2)
+        glVertex2f(pos_x + cell_width*0.8, pos_y - cell_height*0.8)
+        glVertex2f(pos_x + cell_width*0.2, pos_y - cell_height*0.8)
+        glEnd()
+        
 def render_scene(maze, agent, has_won, success_message_time, current_time):
     draw_maze(maze, agent)
     cell_width = 2.0 / maze.width
@@ -93,16 +106,3 @@ def render_scene(maze, agent, has_won, success_message_time, current_time):
     if has_won and current_time - success_message_time < 2000:
         pulse = (1 + math.sin((current_time - success_message_time) / 100)) / 2
         draw_cell(maze.width-1, maze.height-1, maze, cell_width, cell_height, agent, (pulse, 1.0-pulse, 0.0))
-
-def draw_children(maze, agent, cell_width, cell_height):
-    for child_x, child_y in agent.child_positions:
-        glColor3f(1.0, 0.0, 1.0)  # Pink color for children
-        pos_x = -1.0 + child_x * cell_width
-        pos_y = 1.0 - child_y * cell_height
-        
-        glBegin(GL_QUADS)
-        glVertex2f(pos_x + cell_width*0.2, pos_y - cell_height*0.2)
-        glVertex2f(pos_x + cell_width*0.8, pos_y - cell_height*0.2)
-        glVertex2f(pos_x + cell_width*0.8, pos_y - cell_height*0.8)
-        glVertex2f(pos_x + cell_width*0.2, pos_y - cell_height*0.8)
-        glEnd()

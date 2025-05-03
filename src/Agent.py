@@ -2,6 +2,7 @@
 WALL = 0
 PATH = 1
 CHILD = 3
+
 class Agent:
     def __init__(self, x=0, y=0):
         self.x = x

@@ -17,7 +17,7 @@ def setup_opengl():
     glMatrixMode(GL_MODELVIEW)
 
 def handle_events():
-    keys = {"up": False, "down": False, "left": False, "right": False, "restart": False, "quit": False}
+    keys = {"up": False, "down": False, "left": False, "right": False, "restart": False, "quit": False, "solution": False, "paths": False}
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             keys["quit"] = True
@@ -34,6 +34,10 @@ def handle_events():
                 keys["left"] = True
             elif event.key == pygame.K_RIGHT:
                 keys["right"] = True
+            elif event.key == pygame.K_s:
+                keys["solution"] = True
+            elif event.key == pygame.K_p:
+                keys["paths"] = True        
     return keys
 
 def process_movement(agent, maze, key_states):

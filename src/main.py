@@ -7,8 +7,8 @@ from Agent import Agent
 from Draw import *
 from setup import *
 
-MAZE_WIDTH = 30
-MAZE_HEIGHT = 30
+MAZE_WIDTH = 10
+MAZE_HEIGHT = 10
 
 
 def game_loop(maze, agent):
@@ -26,6 +26,14 @@ def game_loop(maze, agent):
 
         if events["quit"]:
             running = False
+            continue
+
+        if events["solution"]:
+            agent.get_solution_paths(maze)
+            continue
+
+        if events["paths"]:
+            agent.get_all_paths(maze)
             continue
 
         if events["restart"]:

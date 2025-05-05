@@ -6,12 +6,13 @@ from Maze import Maze
 from Agent import Agent
 from Draw import *
 from setup import *
+from control_window import ControlPanel
 
 MAZE_WIDTH = 10
 MAZE_HEIGHT = 10
 
 
-def game_loop(maze, agent):
+def game_loop(maze, agent, control_panel):
     move_delay = 200
     last_move_time = pygame.time.get_ticks()
     success_message_time = 0
@@ -23,6 +24,8 @@ def game_loop(maze, agent):
     while running:
         current_time = pygame.time.get_ticks()
         events = handle_events()
+
+        control_panel.update()
 
         if events["quit"]:
             running = False
@@ -77,8 +80,12 @@ def main():
     maze = Maze(MAZE_WIDTH, MAZE_HEIGHT)
     agent = Agent(0, 0)
     agent.generate_children(maze)
-    game_loop(maze, agent)
-    pygame.quit()
+    control_panel = ControlPanel(maze, agent)
+    try:
+            game_loop(maze, agent, control_panel)
+    finally:
+            control_panel.cleanup()
+            pygame.quit()
 
 if __name__ == "__main__":
     main()
